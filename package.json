@@ -1,0 +1,67 @@
+{
+  "name": "micshare-nuxt3",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "start": "yarn workspace neumorphism-preview dev",
+    "build:preview": "yarn workspace neumorphism-preview build",
+    "build:all-lib": "yarn workspace neumorphism-style-builder build & yarn workspace neumorphism-pannel build & yarn workspace neumorphism-materialui-theme build",
+    "lint:eslint": "eslint \"**/*.{jsx,js,tsx,ts}\" --fix",
+    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.json",
+    "lint:branch": "branch-name-lint ./branchnamelint.json",
+    "commit": "cz",
+    "commit-msg": "commitlint --config commitlint.config.js -e -V",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@swc/core": "^1.2.210",
+    "@types/vue-router": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
+    "babel-eslint": "^10.1.0",
+    "branch-name-lint": "^2.1.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.26.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "husky": "^8.0.1",
+    "lerna": "^6.0.3",
+    "lint-staged": "^13.0.3",
+    "nuxt": "^3.2.2",
+    "nx": "^14.3.6",
+    "ts-node": "^10.9.1",
+    "whatwg-fetch": "^3.6.2"
+  },
+  "dependencies": {
+    "@types/node": "^18.7.13",
+    "typescript": "^4.8.2",
+    "vue-router": "^4.1.6"
+  }
+}
