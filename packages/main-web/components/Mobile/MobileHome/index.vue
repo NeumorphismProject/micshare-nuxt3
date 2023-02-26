@@ -1,3 +1,3 @@
 <template>
-  <div>Mobile</div>
+  <div>Mobile Device</div>
 </template>
