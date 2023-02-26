@@ -15,12 +15,12 @@ const routesEx:RouterOptions['routes'] = [
     component: () => import('../pages/home/web.vue')
   },
   {
-    path: '/p.home',
+    path: '/p/home',
     name: 'home-ipad',
     component: () => import('../pages/home/ipad.vue')
   },
   {
-    path: '/m.home',
+    path: '/m/home',
     name: 'home-mobile',
     component: () => import('../pages/home/mobile.vue')
   },

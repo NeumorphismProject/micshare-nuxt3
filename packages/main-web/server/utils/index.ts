@@ -1,9 +1,4 @@
 
-export interface DevicesRoutes {
-  web: string
-  ipad: string
-  mobile: string
-}
 export interface DevicesRoutesControllerRequestParams {
   event: any
   userAgent?: string
@@ -23,36 +18,27 @@ export function getDeviceType({userAgent}:{userAgent?:string}):DeviceType|''{
   }
   return ''
 }
-export function devicesRoutesController({web,ipad,mobile}:DevicesRoutes, {event, userAgent, routeUrl}:DevicesRoutesControllerRequestParams):DeviceType|null{
+
+/**
+ * 前端 app/router.options.ts 中已经规定三端设备的路由命名规则，这里的判断逻辑也是与之匹配的
+ * 若路由规则有所变化，则这里的判断逻辑也需要进行想要的改变
+ * @param param0 
+ */
+export function devicesRoutesController({event, userAgent, routeUrl}:DevicesRoutesControllerRequestParams):void{
   const ua = userAgent || ''
   const url = routeUrl || ''
-  if (url === web) {
-    if (ua.includes('iPad')) {
-      sendRedirect(event, ipad);
-      return 'ipad'
+  const deviceType = getDeviceType({userAgent:ua})
+  if(deviceType === 'web'){
+    if(url.includes('/p/') || url.includes('/m/')){
+      sendRedirect(event, url)
     }
-    if (ua.includes('iPhone')) {
-      sendRedirect(event, mobile)
-      return 'mobile'
+  } else if(deviceType === 'ipad') {
+    if((!url.includes('/p/') && !url.includes('/m/')) || url.includes('/m/')){
+      sendRedirect(event, url)
     }
-  } else if (url === ipad) {
-    if (ua.includes('iPhone')) {
-      sendRedirect(event, mobile)
-      return 'mobile'
-    }
-    if (!ua.includes('iPhone') && !ua.includes('iPad')) {
-      sendRedirect(event, web)
-      return 'web'
-    }
-  } else if (url === mobile) {
-    if (ua.includes('iPad')) {
-      sendRedirect(event, ipad)
-      return 'ipad'
-    }
-    if (!ua.includes('iPhone') && !ua.includes('iPad')) {
-      sendRedirect(event, web)
-      return 'web'
+  } else if(deviceType === 'mobile') {
+    if((!url.includes('/p/') && !url.includes('/m/')) || url.includes('/p/')){
+      sendRedirect(event, url)
     }
   }
-  return null
 }

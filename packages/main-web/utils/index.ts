@@ -1,3 +1,9 @@
+
+/**
+ * 【已放弃使用】保留参考而已
+ * 这种获取 headers 的方式只能在客户端渲染时使用，SSR中不适用
+ * @returns 
+ */
 export function getRouteHeaders(){
   const req = new XMLHttpRequest();
   req.open('GET', document.location.href, false);
