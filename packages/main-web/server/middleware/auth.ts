@@ -1,4 +1,4 @@
-import { devicesRoutesController } from '../utils'
+import { devicesRoutesController, getDeviceType } from '../utils'
 
 export default defineEventHandler((event) => {
   console.log('---- server routes event = ', event)
@@ -9,5 +9,8 @@ export default defineEventHandler((event) => {
   const ua = headers['user-agent']
   console.log('---- server routes user-agent = ', ua)
 
+  const deviceType = getDeviceType({ userAgent:ua })
+  setResponseHeader(event, 'device-type', deviceType)
   devicesRoutesController({web:'/home', ipad:'/p.home', mobile:'/m.home'},{event, userAgent:ua, routeUrl: reqUrl})
+
 })
