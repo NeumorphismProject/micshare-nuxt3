@@ -3,6 +3,7 @@ export interface DevicesRoutesControllerRequestParams {
   event: any
   userAgent?: string
   routeUrl?: string
+  redirectDefaultUrl?: boolean
 }
 type DeviceType = 'web' | 'ipad' | 'mobile'
 export function getDeviceType({userAgent}:{userAgent?:string}):DeviceType|''{
@@ -24,21 +25,30 @@ export function getDeviceType({userAgent}:{userAgent?:string}):DeviceType|''{
  * 若路由规则有所变化，则这里的判断逻辑也需要进行想要的改变
  * @param param0 
  */
-export function devicesRoutesController({event, userAgent, routeUrl}:DevicesRoutesControllerRequestParams):void{
+export function devicesRoutesController({event, userAgent, routeUrl, redirectDefaultUrl}:DevicesRoutesControllerRequestParams):any{
   const ua = userAgent || ''
   const url = routeUrl || ''
+  let toUrl = url
   const deviceType = getDeviceType({userAgent:ua})
   if(deviceType === 'web'){
-    if(url.includes('/p/') || url.includes('/m/')){
-      sendRedirect(event, url)
+    if(url.includes('/p.') || url.includes('/m.')){
+      toUrl = url.replace('/p.','/').replace('/m.','/')
+      return sendRedirect(event, toUrl)
     }
   } else if(deviceType === 'ipad') {
-    if((!url.includes('/p/') && !url.includes('/m/')) || url.includes('/m/')){
-      sendRedirect(event, url)
+    if(!url.includes('/p.')){
+      toUrl = url.replace('/m.','')
+      toUrl = toUrl.substring(0,1) === '/' ? toUrl.substring(1) : toUrl
+      return sendRedirect(event, `/p.${toUrl}`)
     }
   } else if(deviceType === 'mobile') {
-    if((!url.includes('/p/') && !url.includes('/m/')) || url.includes('/p/')){
-      sendRedirect(event, url)
+    if(!url.includes('/m.')){
+      toUrl = url.replace('/p.','')
+      toUrl = toUrl.substring(0,1) === '/' ? toUrl.substring(1) : toUrl
+      return sendRedirect(event, `/m.${toUrl}`)
     }
+  }
+  if(redirectDefaultUrl){
+    return sendRedirect(event, toUrl)
   }
 }
