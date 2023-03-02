@@ -8,5 +8,5 @@ export default defineEventHandler((event) => {
   // console.log('---- server routes headers = ', event)
   const ua = headers['user-agent']
   // console.log('---- server routes user-agent = ', ua)
-  devicesRoutesController({event, userAgent:ua, routeUrl: reqUrl})
+  // devicesRoutesController({event, userAgent:ua, routeUrl: reqUrl})
 })
