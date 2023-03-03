@@ -12,4 +12,9 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
+  // webpack: {
+  //   optimization: {
+  //     minimize: false
+  //   }
+  // }
 });
